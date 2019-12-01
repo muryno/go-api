@@ -38,10 +38,15 @@ var UserLogin = func(w http.ResponseWriter, r *http.Request) {
 }
 
 var GetUser = func(w http.ResponseWriter, r *http.Request) {
-	keys := r.URL.Query()
-	deviceGUID := keys.Get("user_id") //Get return empty string if key not found
-	data := model.GetUser(deviceGUID)
+	user := r.Context().Value("user") . (uint) //Grab the id of the user that send the request
+	contact := &model.Account{}
+
+
+
+	contact.ID = user
+	data := model.GetUser(user)
 	resp := u.Message(true, "success")
 	resp["data"] = data
 	u.Responds(w, resp)
+
 }

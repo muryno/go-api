@@ -122,14 +122,18 @@ func Login(email, password string) map[string]interface{} {
 
 }
 
-func GetUser(u string) []*Account {
+func GetUser(u uint) *Account {
+	acc := &Account{}
 
-	acc := make([]*Account, 0)
-	err := GetDB().Table("account").Where("id = ?", u).Find(&acc).Error
+	err := GetDB().Table("account").Where("id = ?", u).Find(acc).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
+
+
+
+	acc.Password = " "
 
 	return acc
 }
